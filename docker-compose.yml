@@ -1,0 +1,124 @@
+services:
+  
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      mysql_db:
+        condition: service_started
+      redis:
+        condition: service_started
+    networks:
+      - internal
+    deploy:
+      restart_policy:
+        condition: unless-stopped      
+      replicas: 1
+    expose:
+      - 3006
+    environment:
+      - NODE_ENV=production
+      - FORCE_SYNC=false
+      - DEBUG=${DEBUG}
+      - QUERY_LOGGING=${QUERY_LOGGING}
+      - DB_HOST=mysql_db
+      - DB_NAME=rpc_uptime_data
+      - DB_USER=root
+      - DB_PWD=${DB_PWD}
+      - BAKLAVA_EXTERNAL_NODE=${BAKLAVA_EXTERNAL_NODE}
+      - MAINNET_EXTERNAL_NODE=${MAINNET_EXTERNAL_NODE}
+      - BAKLAVA_LOCAL_NODE=${BAKLAVA_EXTERNAL_NODE}
+      - MAINNET_LOCAL_NODE=${MAINNET_INTERNAL_NODE}
+      - CORS_URLS=*
+      - REDIS_URL=redis://redis:6379
+  
+  mysql_db:
+    image: mysql:8.0
+    stop_grace_period: 1m
+    container_name: mysql_db
+    networks:
+      - internal
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PWD}
+      MYSQL_DATABASE: rpc_uptime_data
+    expose:
+      - 3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: ["--default-authentication-plugin=mysql_native_password", "--innodb-buffer-pool-size=8G", "--innodb-buffer-pool-instances=16", "--max_allowed_packet=1073741824"]
+
+  redis:
+    image: redis/redis-stack-server:latest
+    container_name: redis
+    networks:
+      - internal
+    restart: always
+    expose:
+      - 6379
+    volumes:
+      - redis_data:/data    
+
+  rpc-baklava-indexer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql_db
+    networks:
+      - internal
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+    container_name: rpc-baklava-indexer
+    command: [ "node", "./.dist/indexer/index.js" ]
+    environment:
+      - NODE_URL=${BAKLAVA_EXTERNAL_NODE}
+      - EXTERNAL_NODE_URL=${BAKLAVA_EXTERNAL_NODE}
+      - DB_HOST=mysql_db
+      - DB_PWD=${DB_PWD}
+      - DB_USER=root
+      - DB_NAME=rpc_uptime_data
+      - NETWORK_ID=baklava
+      - FORCE_SYNC=${FORCE_SYNC}
+      - QUERY_LOGGING=${QUERY_LOGGING}
+      - DEBUG=${DEBUG}
+      - RPC_TIMER_MS=300000        
+      - MIGRATION_BLOCK=28308600
+
+  rpc-mainnet-indexer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql_db
+    networks:
+      - internal
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+    container_name: rpc-mainnet-indexer
+    command: [ "node", "./.dist/indexer/index.js" ]
+    environment:
+      - NODE_URL=${MAINNET_EXTERNAL_NODE}
+      - EXTERNAL_NODE_URL=${MAINNET_EXTERNAL_NODE}
+      - DB_HOST=mysql_db
+      - DB_PWD=${DB_PWD}
+      - DB_USER=root
+      - DB_NAME=rpc_uptime_data
+      - NETWORK_ID=mainnet
+      - FORCE_SYNC=${FORCE_SYNC}
+      - QUERY_LOGGING=${QUERY_LOGGING}
+      - DEBUG=true
+      - RPC_TIMER_MS=300000
+      - MIGRATION_BLOCK=31056500
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  internal: {}

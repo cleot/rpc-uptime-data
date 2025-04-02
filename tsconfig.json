@@ -1,0 +1,39 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "lib": [
+      "es6",
+      "es7"
+    ],
+    "resolveJsonModule": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "noImplicitAny": true,
+      "types": ["node"],
+    "declaration": true,      
+    "esModuleInterop": true,
+    "target": "es2017",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "./.dist/",
+    "rootDir": "./src/", 
+    "skipDefaultLibCheck": true,
+    "baseUrl": "./",
+    "skipLibCheck": true,
+    "allowJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true              
+  },
+  "include": [
+    "src/**/*",
+    "src/test/*.spec.ts",
+    "src/api/**/*",
+    "src/db/**/*",
+    "src/db/migrations/*.ts",
+    "src/utils/**/*",
+    "src/service/**/*"
+  ],  
+  "exclude": [
+    "node_modules",      
+  ]    
+}

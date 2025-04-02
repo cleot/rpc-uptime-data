@@ -1,0 +1,29 @@
+{
+  "overrides": [
+    {
+      "files": "*.js",
+      "options": {
+        "semi": true,
+        "tabWidth": 4,
+        "useTabs": true,
+        "singleQuote": false
+      }
+    }, {
+      "files": "*.ts",
+      "options": {
+        "semi": true,
+        "tabWidth": 4,
+        "useTabs": true,
+        "singleQuote": false
+      }
+    }, {
+        "files": "*.tsx",
+        "options": {
+          "semi": true,
+          "tabWidth": 4,
+          "useTabs": true,
+          "singleQuote": false
+        }
+    }
+  ]
+}

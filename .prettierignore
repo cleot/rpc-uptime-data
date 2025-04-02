@@ -1,0 +1,6 @@
+.build
+.dist
+node_modules
+src/db/migrations/*
+src/db/seeders/*
+src/utils/email_templates/*
