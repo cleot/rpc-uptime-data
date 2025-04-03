@@ -69,7 +69,6 @@ export class ValidatorName extends Model<ValidatorName> {
 	id: number;
 
 	@AllowNull(false)
-	@Column
 	@Column(DataType.TEXT("long"))
 	get validatorName(): string {
 		return decodeBase64(this.getDataValue("validatorName"));

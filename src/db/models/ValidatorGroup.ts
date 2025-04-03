@@ -76,7 +76,6 @@ export class ValidatorGroup extends Model<ValidatorGroup> {
 	address: string;
 
 	@AllowNull(true)
-	@Column
 	@Column(DataType.TEXT("long"))
 	get name(): string {
 		return decodeBase64(this.getDataValue("name"));
