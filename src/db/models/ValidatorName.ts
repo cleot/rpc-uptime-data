@@ -79,7 +79,7 @@ export class ValidatorName extends Model<ValidatorName> {
 	}
 
 	@Unique("UQ_ValidatorName_networkId_validatorId_fromBlock")
-	@Index
+	@Index("IDX_ValidatorName_networkId_validatorId_fromBlock")
 	@ForeignKey(() => Network)
 	@AllowNull(false)
 	@Column
@@ -88,7 +88,7 @@ export class ValidatorName extends Model<ValidatorName> {
 	network?: Network;
 
 	@Unique("UQ_ValidatorName_networkId_validatorId_fromBlock")
-	@Index
+	@Index("IDX_ValidatorName_networkId_validatorId_fromBlock")
 	@ForeignKey(() => Validator)
 	@AllowNull(false)
 	@Column
@@ -97,7 +97,7 @@ export class ValidatorName extends Model<ValidatorName> {
 	validator?: Validator;
 
 	@Unique("UQ_ValidatorName_networkId_validatorId_fromBlock")
-	@Index
+	@Index("IDX_ValidatorName_networkId_validatorId_fromBlock")
 	@AllowNull(false)
 	@Comment("Block.blockNumber rather than Block.id, for legibility")
 	@Column
