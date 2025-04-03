@@ -1,0 +1,21 @@
+{
+  "name": "@rpc-uptime/indexer-worker",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev --local",
+    "start": "wrangler dev --local",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@rpc-uptime/shared-types": "workspace:*",
+    "@rpc-uptime/database-core": "workspace:*",
+    "@celo/contractkit": "^8.3.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240712.0",
+    "typescript": "^5.0.0",
+    "wrangler": "^3.67.1"
+  }
+}

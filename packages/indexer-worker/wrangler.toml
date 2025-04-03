@@ -1,0 +1,38 @@
+name = "rpc-uptime-indexer" # Name of the worker
+main = "src/index.ts" # Entry point for the worker code
+compatibility_date = "2024-04-03" # Use a recent compatibility date
+
+# Account ID - Replace with your actual Cloudflare Account ID
+# account_id = "$CLOUDFLARE_ACCOUNT_ID"
+
+# Cron Trigger - Runs the worker on a schedule
+# This example runs every 5 minutes. Adjust as needed.
+[triggers]
+crons = ["*/5 * * * *"]
+
+# Environment variables for network configuration
+[vars]
+# NETWORK_ID should be 'mainnet', 'alfajores', or 'baklava'
+NETWORK_ID = "mainnet"
+# CELO_RPC_URL should point to a reliable node for the specified NETWORK_ID
+CELO_RPC_URL = "https://forno.celo.org"
+# Optional: Starting block for certain operations if needed
+# STARTING_BLOCK = "0"
+
+# D1 Database Binding - Replace 'YOUR_D1_DATABASE_ID' with the actual ID
+# Ensure this uses the SAME database ID as the api-worker
+[[d1_databases]]
+binding = "DB" # How the binding is accessed in the worker code (e.g., env.DB)
+database_name = "rpc-uptime-db" # A descriptive name for the database in Wrangler/Cloudflare
+database_id = "YOUR_D1_DATABASE_ID"
+preview_database_id = "YOUR_D1_PREVIEW_DATABASE_ID" # Optional: For local development/preview
+
+# Optional: Add secrets for RPC node API keys if required
+# [secrets]
+# RPC_API_KEY
+
+# Optional: Configure local development server (useful for testing cron locally)
+# [dev]
+# ip = "127.0.0.1"
+# port = 8788 # Use a different port than the api-worker if running simultaneously
+# local_protocol = "http"

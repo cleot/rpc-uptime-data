@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2021", // Use ES2021 features
+    "module": "ESNext", // Use modern ES modules
+    "moduleResolution": "node",
+    "lib": ["ES2021"], // Include ES2021 library features
+    "allowJs": true, // Allow JavaScript files to be compiled
+    "checkJs": false, // Don't type-check JavaScript files
+    "noEmit": true, // Wrangler handles emit, so TypeScript shouldn't
+    "isolatedModules": true, // Ensure each file can be safely transpiled
+    "allowSyntheticDefaultImports": true, // Allow default imports from modules with no default export
+    "forceConsistentCasingInFileNames": true,
+    "strict": true, // Enable all strict type-checking options
+    "skipLibCheck": true, // Skip type checking of declaration files
+    "esModuleInterop": true, // Enables emit interoperability between CommonJS and ES Modules
+    "baseUrl": ".", // Base directory for module resolution
+    "paths": {
+      "@rpc-uptime/shared-types": ["../shared-types/src"] // Path mapping for the shared types package
+    },
+    "types": [
+      "@cloudflare/workers-types" // Include Cloudflare Workers type definitions
+    ]
+  },
+  "include": ["src/**/*", "test/**/*"], // Include source and test files
+  "exclude": ["node_modules", "dist"] // Exclude build output and dependencies
+}

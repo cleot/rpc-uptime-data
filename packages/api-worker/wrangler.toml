@@ -1,0 +1,36 @@
+name = "rpc-uptime-api" # Name of the worker
+main = "src/index.ts" # Entry point for the worker code
+compatibility_date = "2024-04-03" # Use a recent compatibility date
+
+# Account ID - Replace with your actual Cloudflare Account ID
+# account_id = "$CLOUDFLARE_ACCOUNT_ID"
+
+# Route - Configure how requests reach this worker (optional, can be set in CF dashboard)
+# route = "api.yourdomain.com/*"
+
+# Environment variables (optional)
+# [vars]
+# EXAMPLE_VAR = "example_value"
+
+# D1 Database Binding - Replace 'YOUR_D1_DATABASE_ID' with the actual ID
+[[d1_databases]]
+binding = "DB" # How the binding is accessed in the worker code (e.g., env.DB)
+database_name = "rpc-uptime-db" # A descriptive name for the database in Wrangler/Cloudflare
+database_id = "YOUR_D1_DATABASE_ID"
+preview_database_id = "YOUR_D1_PREVIEW_DATABASE_ID" # Optional: For local development/preview
+
+# KV Namespace Binding for Caching - Replace 'YOUR_KV_NAMESPACE_ID' with the actual ID
+[[kv_namespaces]]
+binding = "CACHE_KV" # How the binding is accessed in the worker code (e.g., env.CACHE_KV)
+id = "YOUR_KV_NAMESPACE_ID"
+preview_id = "YOUR_KV_PREVIEW_NAMESPACE_ID" # Optional: For local development/preview
+
+# Optional: Add secrets for API keys, etc.
+# [secrets]
+# API_KEY
+
+# Optional: Configure local development server
+# [dev]
+# ip = "127.0.0.1"
+# port = 8787
+# local_protocol = "http"

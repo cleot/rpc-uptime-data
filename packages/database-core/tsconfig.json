@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "lib": ["ES2021"],
+    "declaration": true, // Generate .d.ts files for other packages to use
+    "outDir": "./dist",
+    // "rootDir": "./src", // Removed to avoid issues with path mapping outside root
+    "allowJs": true,
+    "checkJs": false,
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    // "paths": { // Removed, rely on pnpm workspace linking
+    //   "@rpc-uptime/shared-types": ["../shared-types/src"]
+    // },
+    "types": [
+      "@cloudflare/workers-types" // Include Worker types for D1Database etc.
+    ]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
